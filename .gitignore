@@ -21,3 +21,5 @@
 CLAUDE.md
 AGENTS.md
 /.claude/
+/macos/SingBoxTester/.build/
+/macos/SingBoxTester/.swiftpm/
