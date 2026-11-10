@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/sagernet/sing-box/common/trafficcontrol"
+	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/daemon"
 	"github.com/sagernet/sing-box/experimental/libbox/internal/oomprofile"
 	"github.com/sagernet/sing-box/experimental/libbox/internal/runtimeinfo"
@@ -64,6 +65,9 @@ func OOMRecorderOptions(startedService *daemon.StartedService) oomkiller.Recorde
 		},
 		SnapshotCallback: func(directory string, prefix string) {
 			for _, name := range oomReportProfiles {
+				if C.IsIos && (name == "allocs" || name == "heap") {
+					continue
+				}
 				writeOOMProfile(filepath.Join(directory, prefix+"."+name+".pb"), name)
 			}
 			runtimeInfoPath := filepath.Join(directory, prefix+".runtime.json")
